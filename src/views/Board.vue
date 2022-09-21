@@ -44,6 +44,15 @@
           >
         </div>
       </div>
+      <div class="column flex">
+        <input
+          class="p-2 mr-3 flex-grow"
+          placeholder="New Column Name"
+          type="text"
+          v-model="newColumnName"
+          @keyup.enter="createColumn"
+        >
+      </div>
     </div>
 
     <div
@@ -60,6 +69,11 @@
 import { mapState } from 'vuex'
 
 export default {
+  data () {
+    return {
+      newColumnName: ''
+    }
+  },
   computed: {
     ...mapState(['board']),
     isTaskOpen () {
@@ -75,6 +89,12 @@ export default {
     },
     close () {
       this.$router.push({ name: 'board' })
+    },
+    createColumn () {
+      this.$store.commit('CREATE_COLUMN', {
+        name: this.newColumnName
+      })
+      this.newColumnName = ''
     },
     createTask (event, tasks) {
       this.$store.commit('CREATE_TASK', {
